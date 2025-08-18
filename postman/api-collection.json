@@ -1,0 +1,455 @@
+{
+	"info": {
+		"_postman_id": "ab4a4cc3-cfee-4b39-92ec-6a2257fd8c3e",
+		"name": "SkeletonCollection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "16197410"
+	},
+	"item": [
+		{
+			"name": "signup",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"try {",
+							"  const json = pm.response.json();",
+							"  const token = json?.session?.access_token;",
+							"  if (token) {",
+							"      pm.collectionVariables.set('access_token', json?.session?.access_token)",
+							"  }",
+							"} catch (e) {}",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"bla@gmail.com\",\n    \"password\": \"12345678\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/auth/signup",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"auth",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "signup_validation_fail",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"bbb@gmail.com\",\n    \"password\": 12345678\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/auth/signup",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"auth",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login_success",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let t = '';",
+							"try { t = pm.response.json()?.session?.access_token || ''; } catch (e) {}",
+							"if (t) pm.collectionVariables.set('access_token', t);",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"bla@gmail.com\",\n    \"password\": \"12345678!\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/auth/login",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user_not_found",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"aaa@gmail.com\",\n    \"password\": \"12345678\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/auth/login",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login_wrong_creds",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"bla@gmail.com\",\n    \"password\": \"123456781\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/auth/login",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "reset_password_success",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"bla@gmail.com\",\n    \"current_password\": \"12345678\",\n    \"new_password\": \"12345678!\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/auth/password/reset",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"auth",
+						"password",
+						"reset"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "reset_password_wrong_creds",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"bla@gmail.com\",\n    \"current_password\": \"00000000\",\n    \"new_password\": \"12345678!\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/auth/password/reset",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"auth",
+						"password",
+						"reset"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create_todo",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const json = pm.response.json() || {};",
+							"if (json.id) {",
+							"  pm.collectionVariables.set('todo_id', json.id);",
+							"  console.log('[post] todo_id saved:', json.id);",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"call mom\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/todo",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"todo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "todo_list",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const arr = pm.response.json();",
+							"if (Array.isArray(arr) && arr.length) {",
+							"  pm.collectionVariables.set('todo_id', arr[0].id);",
+							"}",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/todo?is_done=false&order=ASC&limit=20&offset=0",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"todo"
+					],
+					"query": [
+						{
+							"key": "is_done",
+							"value": "false"
+						},
+						{
+							"key": "title",
+							"value": "mom",
+							"disabled": true
+						},
+						{
+							"key": "order",
+							"value": "ASC"
+						},
+						{
+							"key": "limit",
+							"value": "20"
+						},
+						{
+							"key": "offset",
+							"value": "0"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_todo",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{baseUrl}}/todo/bfa0faf0-6892-48e6-bcff-71519c8380c2",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"todo",
+						"bfa0faf0-6892-48e6-bcff-71519c8380c2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update_todo",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"is_done\": true,\n    \"title\": \"don't call\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/todo/bfa0faf0-6892-48e6-bcff-71519c8380c2",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"todo",
+						"bfa0faf0-6892-48e6-bcff-71519c8380c2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete_todo",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/todo/bfa0faf0-6892-48e6-bcff-71519c8380c2",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"todo",
+						"bfa0faf0-6892-48e6-bcff-71519c8380c2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "unauthorized",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/todo/bfa0faf0-6892-48e6-bcff-71519c8380c2",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"todo",
+						"bfa0faf0-6892-48e6-bcff-71519c8380c2"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "access_token",
+			"value": ""
+		}
+	]
+}
