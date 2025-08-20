@@ -44,15 +44,15 @@ $ npm run start:prod
 ## Run with Docker
 
 The project comes with a Dockerfile that:
-    1.Builds the application
-    2.Runs database migrations
-    3.Starts the NestJS server
+-    1.Builds the application
+-    2.Runs database migrations
+-    3.Starts the NestJS server
 
 Prerequisites:
-    -Docker
-    -PostgreSQL instance accessible from the container 
+-    -Docker
+-    -PostgreSQL instance accessible from the container 
 (tip: use host.docker.internal instead of localhost when connecting to a DB running on your host machine).
-    - .env file in the project root according to the env.example
+-    - .env file in the project root according to the env.example
 
 ## Build the image
 ```bash
